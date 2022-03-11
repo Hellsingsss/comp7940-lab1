@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  DEP_PATH: Joe/requirements.txt
+  DEP_PATH: src/requirements.txt
 
 jobs:
   build:
