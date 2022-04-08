@@ -5,6 +5,7 @@ import configparser
 import logging
 import redis
 import os
+import cv2
 global redis1
 
 # test
@@ -53,7 +54,7 @@ def hiking(update: Update, context: CallbackContext) -> None:
         logging.info(context.args[0])
         msg = context.args[0]  # /hiking keyword <-- this should store the keyword
         if redis1.exists(msg):
-            update.message.reply_text(redis1.get(msg).decode('UTF-8'))
+            update.message.reply_photo(redis1.get(msg).decode('UTF-8'))
         else:
             msg = "*" + msg + "*"
             key = redis1.keys(msg)
@@ -65,6 +66,7 @@ def hiking(update: Update, context: CallbackContext) -> None:
                 update.message.reply_text("\n".join(reply))
     except (IndexError, ValueError):
         update.message.reply_text('Usage: /hiking <keyword>')
+
 
 
 if __name__ == '__main__':
