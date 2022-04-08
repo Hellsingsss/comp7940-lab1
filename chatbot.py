@@ -54,7 +54,7 @@ def hiking(update: Update, context: CallbackContext) -> None:
         logging.info(context.args[0])
         msg = context.args[0]  # /hiking keyword <-- this should store the keyword
         if redis1.exists(msg):
-            update.message.reply_photo(redis1.get(msg).decode('base64'))
+            update.message.reply_photo(redis1.get(msg).decode('UTF-8'))
         else:
             msg = "*" + msg + "*"
             key = redis1.keys(msg)
