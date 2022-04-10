@@ -43,6 +43,13 @@ def echo(update, context):
     logging.info("context: " + str(context))
     context.bot.send_message(chat_id=update.effective_chat.id, text=reply_message)
 
+def echo(update, context):
+    reply_photo = update.photo.text.upper()
+    logging.info("Update: " + str(update))
+    logging.info("context: " + str(context))
+    context.bot.send_photo(chat_id=update.effective_chat.id, text=reply_photo)
+    
+
 
 # Define a few command handlers. These usually take the one arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
@@ -53,8 +60,11 @@ def hiking(update: Update, context: CallbackContext) -> None:
         global redis1
         logging.info(context.args[0])
         msg = context.args[0]  # /hiking keyword <-- this should store the keyword
+        image = context.args[0]
         if redis1.exists(msg):
-            update.message.reply_photo(redis1.get(msg).decode('UTF-8'))
+            update.message.reply_text(redis1.get(msg).decode('UTF-8'))
+        if redis1.exists(image):
+            update.message.reply_photo(redis1.get(image).decode('UTF-8'))
         else:
             msg = "*" + msg + "*"
             key = redis1.keys(msg)
